@@ -1,6 +1,9 @@
 import React from 'react'
+import { moveClockwise } from '../state/action-creators'
+import { connect } from 'react-redux'
 
-export default function Wheel(props) {
+function Wheel(props) {
+  
   return (
     <div id="wrapper">
       <div id="wheel">
@@ -13,8 +16,10 @@ export default function Wheel(props) {
       </div>
       <div id="keypad">
         <button id="counterClockwiseBtn" >Counter clockwise</button>
-        <button id="clockwiseBtn">Clockwise</button>
+        <button onClick={() => props.moveClockwise()} id="clockwiseBtn">Clockwise</button>
       </div>
     </div>
   )
 }
+
+export default connect(null, {moveClockwise})(Wheel);
