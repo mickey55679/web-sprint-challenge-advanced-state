@@ -10,7 +10,7 @@ function wheel(state = initialWheelState, action) {
       // console.log(state)
       return (state + 1) % 6
       case MOVE_COUNTERCLOCKWISE:
-        console.log('Moving Counter Clockwise')
+        // console.log('Moving Counter Clockwise')
         return (state - 1 + 6) % 6;
         default: 
         return state;
