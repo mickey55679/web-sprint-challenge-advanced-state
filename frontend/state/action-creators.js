@@ -10,6 +10,7 @@ export const moveCounterClockwise = () => ({
 })
 
 export const selectAnswer = (answer) => {
+  console.log(answer);
   return {
   type: SET_SELECTED_ANSWER,
   payload: answer, 
@@ -38,7 +39,8 @@ export function fetchQuiz() {
   return function (dispatch) {
     dispatch(setQuiz(null))
     axios.get("http://localhost:9000/api/quiz/next")
-    .then(res => dispatch(setQuiz(res.data)))
+    .then(res => 
+      dispatch(setQuiz(res.data)))
     .catch(err => console.error(err))
     
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)

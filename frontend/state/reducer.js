@@ -31,6 +31,7 @@ const initialSelectedAnswerState = null
 function selectedAnswer(state = initialSelectedAnswerState, action) {
   switch(action.type) {
     case SET_SELECTED_ANSWER:
+      console.log("Action payload:", action.payload)
       return action.payload;
       default: 
       return state;
