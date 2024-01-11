@@ -11,14 +11,16 @@ export const moveCounterClockwise = () => ({
 })
 
 export const selectAnswer = (answer) => {
-  console.log(answer);
+  // console.log(answer);
   return {
   type: SET_SELECTED_ANSWER,
   payload: answer, 
   
  }}
 
-export const setMessage = () => ({
+export const setMessage = (message) => ({
+  type: SET_INFO_MESSAGE,
+  payload: message,
  
  })
 
@@ -51,18 +53,23 @@ export function fetchQuiz() {
 }
 export function postAnswer(answer) {
   return function (dispatch) {
-  
-
   const { quiz_id, answer_id} = answer;
-  console.log('Payload:', {quiz_id, answer_id})
+   console.log("quiz_id", quiz_id);
+   console.log('answer_id', answer_id)
+  //  console.log("Payload:", { quiz_id, answer_id });
+
+  
 
 
     axios.post("http://localhost:9000/api/quiz/answer", {
       quiz_id: quiz_id,
       answer_id: answer_id,
+      
     })
     .then((response) => {
       console.log('Server feedback:', response.data);
+      dispatch(setMessage(response.data.message))
+      
       dispatch(selectAnswer(null));
       dispatch(fetchQuiz());
     })

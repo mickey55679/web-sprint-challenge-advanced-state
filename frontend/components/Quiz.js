@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { fetchQuiz, postAnswer, selectAnswer, setQuiz } from '../state/action-creators'
-
+import Message from './Message';
 
 function Quiz(props) {
-  const {selectedAnswer, quizState} = props;
+  const {selectedAnswer, quizState, serverMessage} = props;
   const dispatch = useDispatch();
 
 
@@ -12,13 +12,18 @@ function Quiz(props) {
     props.selectAnswer(answer)
   };
   const handleSubmitAnswer= () => {
-    if(selectAnswer){
-      dispatch(postAnswer(selectAnswer))
+    if(selectAnswer && quizState){
+      dispatch(
+        postAnswer({
+          quiz_id: quizState.quiz_id,
+          answer_id: selectedAnswer.answer_id,
+        })
+      );
     }
   }
   useEffect(() => {
    dispatch(fetchQuiz())
-  }, [])
+  }, [dispatch])
   return (
     <div id="wrapper">
       {
@@ -58,6 +63,7 @@ function Quiz(props) {
             <button id="submitAnswerBtn" disabled={!selectedAnswer} onClick={handleSubmitAnswer}>
               Submit answer
             </button>
+            <Message serverMessage={serverMessage} />
           </>
         ) : (
           "Loading next quiz..."
@@ -66,9 +72,10 @@ function Quiz(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   selectedAnswer: state.selectedAnswer,
   quizState: state.quiz,
+  serverMessage: state.infoMessage,
 })
 
 export default connect(mapStateToProps, {selectAnswer, setQuiz})(Quiz)

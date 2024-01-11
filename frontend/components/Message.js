@@ -1,7 +1,7 @@
 import React from 'react'
 
-function Message(props) {
+function Message({serverMessage}) {
   
-  return <div id="message">Nice job!</div>
+  return <div id="message">{serverMessage}</div>
 }
 export default Message
