@@ -1,14 +1,21 @@
 import React, {useEffect} from 'react'
 import { connect, useDispatch } from 'react-redux'
-import { fetchQuiz, selectAnswer, setQuiz } from '../state/action-creators'
+import { fetchQuiz, postAnswer, selectAnswer, setQuiz } from '../state/action-creators'
 
 
 function Quiz(props) {
   const {selectedAnswer, quizState} = props;
   const dispatch = useDispatch();
+
+
   const handleAnswerClick = (answer) => {
     props.selectAnswer(answer)
   };
+  const handleSubmitAnswer= () => {
+    if(selectAnswer){
+      dispatch(postAnswer(selectAnswer))
+    }
+  }
   useEffect(() => {
    dispatch(fetchQuiz())
   }, [])
@@ -48,7 +55,7 @@ function Quiz(props) {
               </div>
             </div>
 
-            <button id="submitAnswerBtn" disabled={!selectedAnswer}>
+            <button id="submitAnswerBtn" disabled={!selectedAnswer} onClick={handleSubmitAnswer}>
               Submit answer
             </button>
           </>
@@ -59,7 +66,7 @@ function Quiz(props) {
     </div>
   );
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedAnswer: state.selectedAnswer,
   quizState: state.quiz,
 })
