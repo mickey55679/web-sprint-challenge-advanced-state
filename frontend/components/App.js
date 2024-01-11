@@ -8,6 +8,7 @@ import Quiz from './Quiz'
 import Message from './Message'
 import Form from './Form'
 
+
 // REDUX IMPORTS
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
@@ -29,9 +30,15 @@ export default function App() {
         <Message />
         <h1>Advanced State</h1>
         <nav>
-          <NavLink id="wheelLink" to="/">Wheel</NavLink>
-          <NavLink id="quizLink" to="/quiz">Quiz</NavLink>
-          <NavLink id="formLink" to="/quiz-new">Form</NavLink>
+          <NavLink id="wheelLink" to="/">
+            Wheel
+          </NavLink>
+          <NavLink id="quizLink" to="/quiz">
+            Quiz
+          </NavLink>
+          <NavLink id="formLink" to="/quiz-new">
+            Form
+          </NavLink>
         </nav>
         <Routes>
           <Route path="/" element={<Wheel />} />
@@ -40,5 +47,5 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </Provider>
-  )
+  );
 }

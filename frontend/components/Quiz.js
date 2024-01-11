@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { fetchQuiz, postAnswer, selectAnswer, setQuiz } from '../state/action-creators'
-import Message from './Message';
 
 function Quiz(props) {
-  const {selectedAnswer, quizState, serverMessage} = props;
+  const {selectedAnswer, quizState} = props;
   const dispatch = useDispatch();
 
 
@@ -26,14 +25,21 @@ function Quiz(props) {
   }, [dispatch])
   return (
     <div id="wrapper">
+    
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
         quizState ? (
           <>
             <h2>{quizState.question}</h2>
+
             <div id="quizAnswers">
               <div
-                className="answer selected"
+                className={`answer ${
+                  selectedAnswer &&
+                  selectedAnswer.answer_id === quizState.answers[0].answer_id
+                    ? "selected"
+                    : ""
+                }`}
                 onClick={() => handleAnswerClick(quizState.answers[0])}
               >
                 {quizState.answers[0].text}
@@ -46,7 +52,12 @@ function Quiz(props) {
               </div>
 
               <div
-                className="answer"
+                className={`answer ${
+                  selectedAnswer &&
+                  selectedAnswer.answer_id === quizState.answers[1].answer_id
+                    ? "selected"
+                    : ""
+                }`}
                 onClick={() => handleAnswerClick(quizState.answers[1])}
               >
                 {quizState.answers[1].text}
@@ -60,10 +71,14 @@ function Quiz(props) {
               </div>
             </div>
 
-            <button id="submitAnswerBtn" disabled={!selectedAnswer} onClick={handleSubmitAnswer}>
+            <button
+              id="submitAnswerBtn"
+              disabled={!selectedAnswer}
+              onClick={handleSubmitAnswer}
+            >
               Submit answer
             </button>
-            <Message serverMessage={serverMessage} />
+            {/* <Message serverMessage={serverMessage} /> */}
           </>
         ) : (
           "Loading next quiz..."

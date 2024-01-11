@@ -21,7 +21,6 @@ export const selectAnswer = (answer) => {
 export const setMessage = (message) => ({
   type: SET_INFO_MESSAGE,
   payload: message,
- 
  })
 
 export const setQuiz = (quiz) => ({
@@ -56,9 +55,6 @@ export function postAnswer(answer) {
   const { quiz_id, answer_id} = answer;
    console.log("quiz_id", quiz_id);
    console.log('answer_id', answer_id)
-  //  console.log("Payload:", { quiz_id, answer_id });
-
-  
 
 
     axios.post("http://localhost:9000/api/quiz/answer", {
@@ -82,8 +78,24 @@ export function postAnswer(answer) {
     // - Dispatch the fetching of the next quiz
   }
 }
-export function postQuiz() {
+export function postQuiz(question) {
   return function (dispatch) {
+    const {question_text, true_answer_text,false_answer_text} = question;
+
+   axios.post("http://localhost:9000/api/quiz/new", {
+    question_text: question_text,
+    true_answer_text: true_answer_text,
+    false_answer_text: false_answer_text
+   })
+   .then((resp) => {
+    console.log('Server feedback:', resp)
+    dispatch(setMessage(`Congrats: "${resp.data.question}" is a great question!`))
+    dispatch(resetForm(null))
+   
+   })
+
+   
+
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     // - Dispatch the resetting of the form

@@ -1,15 +1,24 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import * as actionCreators from '../state/action-creators'
 
 export function Form(props) {
+  console.log(props)
+  const dispatch = useDispatch()
 
   const onChange = evt => {
 
   }
 
   const onSubmit = evt => {
-
+   evt.preventDefault()
+   dispatch(
+     actionCreators.postQuiz({
+       question_text: 'kjjio',
+       true_answer_text: 'jkhiuh',
+       false_answer_text: 'jkhiu'
+     })
+   );
   }
 
   return (
