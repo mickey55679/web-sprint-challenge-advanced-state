@@ -5,9 +5,11 @@ import * as actionCreators from '../state/action-creators'
 export function Form(props) {
   console.log(props)
   const dispatch = useDispatch()
+    const { newQuestion, newTrueAnswer, newFalseAnswer } = props;
 
-  const onChange = evt => {
-
+  const onChange = (evt) => {
+    const { id, value } = evt.target;
+    console.log(id, value);
   }
 
   const onSubmit = evt => {
@@ -20,6 +22,13 @@ export function Form(props) {
      })
    );
   }
+   const isDisabled =
+     !newQuestion ||
+     newQuestion.trim().length < 2 ||
+     !newTrueAnswer ||
+     newTrueAnswer.trim().length < 2 ||
+     !newFalseAnswer ||
+     newFalseAnswer.trim().length < 2;
 
   return (
     <form id="form" onSubmit={onSubmit}>
@@ -27,7 +36,7 @@ export function Form(props) {
       <input maxLength={50} onChange={onChange} id="newQuestion" placeholder="Enter question" />
       <input maxLength={50} onChange={onChange} id="newTrueAnswer" placeholder="Enter true answer" />
       <input maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
-      <button id="submitNewQuizBtn">Submit new quiz</button>
+      <button id="submitNewQuizBtn" disabled={isDisabled}>Submit new quiz</button>
     </form>
   )
 }
