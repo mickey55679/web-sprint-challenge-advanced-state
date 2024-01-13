@@ -23,13 +23,13 @@ export function Form(props) {
      })
    );
   }
-   const isDisabled =
-     !newQuestion ||
-     newQuestion.trim().length < 2 ||
-     !newTrueAnswer ||
-     newTrueAnswer.trim().length < 2 ||
-     !newFalseAnswer ||
-     newFalseAnswer.trim().length < 2;
+const isDisabled =
+  !newQuestion ||
+  newQuestion.trim().length < 1 ||
+  !newTrueAnswer ||
+  newTrueAnswer.trim().length < 1 ||
+  !newFalseAnswer ||
+  newFalseAnswer.trim().length < 1;
 
   return (
     <form id="form" onSubmit={onSubmit}>
