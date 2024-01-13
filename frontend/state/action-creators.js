@@ -28,10 +28,15 @@ export const setQuiz = (quiz) => ({
   payload: quiz, 
  })
 
-export const inputChange = (id, value) => ({
- type: INPUT_CHANGE,
-payload: {id, value}
- })
+export const inputChange = (id, value) => {
+  // Store the data in local storage as well as sending it to Redux
+  localStorage.setItem(id, value);
+
+  return {
+    type: INPUT_CHANGE,
+    payload: { id, value },
+  };
+};
 
 export const resetForm = () => ({ 
 type: RESET_FORM,
