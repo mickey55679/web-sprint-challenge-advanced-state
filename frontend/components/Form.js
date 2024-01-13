@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 import { connect, useDispatch } from 'react-redux'
 import * as actionCreators from '../state/action-creators'
+
 
 export function Form(props) {
   console.log(props)
   const dispatch = useDispatch()
     const { newQuestion, newTrueAnswer, newFalseAnswer } = props;
+    
 
   const onChange = (evt) => {
     const { id, value } = evt.target;
@@ -23,13 +25,19 @@ export function Form(props) {
      })
    );
   }
-const isDisabled =
-  !newQuestion ||
-  newQuestion.trim().length < 1 ||
-  !newTrueAnswer ||
-  newTrueAnswer.trim().length < 1 ||
-  !newFalseAnswer ||
-  newFalseAnswer.trim().length < 1;
+   const isDisabled =
+     !newQuestion ||
+     newQuestion.trim().length < 1 ||
+     !newTrueAnswer ||
+     newTrueAnswer.trim().length < 1 ||
+     !newFalseAnswer ||
+     newFalseAnswer.trim().length < 1;
+     console.log("newQuestion:", newQuestion);
+     console.log("newTrueAnswer:", newTrueAnswer);
+     console.log("newFalseAnswer:", newFalseAnswer);
+
+
+
 
   return (
     <form id="form" onSubmit={onSubmit}>
@@ -41,5 +49,11 @@ const isDisabled =
     </form>
   )
 }
+const mapStateToProps = (state) => ({
+  newQuestion: state.form.newQuestion,
+  newTrueAnswer: state.form.newTrueAnswer,
+  newFalseAnswer: state.form.newFalseAnswer,
+});
 
-export default connect(st => st, actionCreators)(Form)
+
+export default connect(mapStateToProps, actionCreators)(Form)
