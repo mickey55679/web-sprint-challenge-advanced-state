@@ -9,16 +9,17 @@ export function Form(props) {
 
   const onChange = (evt) => {
     const { id, value } = evt.target;
-    console.log(id, value);
+    // console.log(id, value);
+    dispatch(actionCreators.inputChange(id, value))
   }
 
   const onSubmit = evt => {
    evt.preventDefault()
    dispatch(
      actionCreators.postQuiz({
-       question_text: 'kjjio',
-       true_answer_text: 'jkhiuh',
-       false_answer_text: 'jkhiu'
+       question_text: newQuestion,
+       true_answer_text: newTrueAnswer,
+       false_answer_text: newFalseAnswer,
      })
    );
   }

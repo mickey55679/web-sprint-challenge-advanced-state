@@ -1,5 +1,5 @@
 // ❗ You don't need to add extra action creators to achieve MVP
-import { response } from "msw";
+
 import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, SET_QUIZ_INTO_STATE, SET_SELECTED_ANSWER, SET_INFO_MESSAGE, INPUT_CHANGE, RESET_FORM } from "./action-types"
 import axios from "axios";
 export const moveClockwise = () => ({ 
@@ -28,12 +28,13 @@ export const setQuiz = (quiz) => ({
   payload: quiz, 
  })
 
-export const inputChange = () => ({
-
+export const inputChange = (id, value) => ({
+ type: INPUT_CHANGE,
+payload: {id, value}
  })
 
 export const resetForm = () => ({ 
-
+type: RESET_FORM,
 })
 
 // ❗ Async action creators
@@ -88,13 +89,12 @@ export function postQuiz(question) {
     false_answer_text: false_answer_text
    })
    .then((resp) => {
-    console.log('Server feedback:', resp)
+    // console.log('Server feedback:', resp)
     dispatch(setMessage(`Congrats: "${resp.data.question}" is a great question!`))
     dispatch(resetForm(null))
    
    })
 
-   
 
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
