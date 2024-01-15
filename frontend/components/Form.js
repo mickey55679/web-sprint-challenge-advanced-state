@@ -1,30 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect, useDispatch } from "react-redux";
 import * as actionCreators from "../state/action-creators";
 
 export function Form(props) {
   console.log(props);
   const dispatch = useDispatch();
-  const { newQuestion, newTrueAnswer, newFalseAnswer } = props;
-  const [localQuestion, setLocalQuestion] = useState(
-    localStorage.getItem("newQuestion") || newQuestion
-  );
-  const [localTrueAnswer, setLocalTrueAnswer] = useState(
-    localStorage.getItem("newTrueAnswer") || newTrueAnswer
-  );
-  const [localFalseAnswer, setLocalFalseAnswer] = useState(
-    localStorage.getItem("newFalseAnswer") || newFalseAnswer
-  );
+  const { newQuestion, newTrueAnswer, newFalseAnswer } = props.form;
+  // const [localQuestion, setLocalQuestion] = useState(
+  //   localStorage.getItem("newQuestion") || newQuestion
+  // );
+  // const [localTrueAnswer, setLocalTrueAnswer] = useState(
+  //   localStorage.getItem("newTrueAnswer") || newTrueAnswer
+  // );
+  // const [localFalseAnswer, setLocalFalseAnswer] = useState(
+  //   localStorage.getItem("newFalseAnswer") || newFalseAnswer
+  // );
 
   const onChange = (evt) => {
-    const { id, value } = evt.target;
+    const { name, value } = evt.target;
     // console.log(id, value);
-    dispatch(actionCreators.inputChange(id, value));
+    
+
+    dispatch(actionCreators.inputChange({...props.form, [name]:value}));
 
     // Update local state when input fields change
-    if (id === "newQuestion") setLocalQuestion(value);
-    if (id === "newTrueAnswer") setLocalTrueAnswer(value);
-    if (id === "newFalseAnswer") setLocalFalseAnswer(value);
+    // if (id === "newQuestion") setLocalQuestion(value);
+    // if (id === "newTrueAnswer") setLocalTrueAnswer(value);
+    // if (id === "newFalseAnswer") setLocalFalseAnswer(value);
   };
 
   const onSubmit = (evt) => {
@@ -45,9 +47,9 @@ export function Form(props) {
     newTrueAnswer.trim().length < 1 ||
     !newFalseAnswer ||
     newFalseAnswer.trim().length < 1;
-  console.log("newQuestion:", newQuestion);
-  console.log("newTrueAnswer:", newTrueAnswer);
-  console.log("newFalseAnswer:", newFalseAnswer);
+  // console.log("newQuestion:", newQuestion);
+  // console.log("newTrueAnswer:", newTrueAnswer);
+  // console.log("newFalseAnswer:", newFalseAnswer);
 
   return (
     <form id="form" onSubmit={onSubmit}>
@@ -58,21 +60,25 @@ export function Form(props) {
         onChange={onChange}
         id="newQuestion"
         placeholder="Enter question"
-        value={localQuestion}
+        value={newQuestion}
+        name='newQuestion'
+
       />
       <input
         maxLength={50}
         onChange={onChange}
         id="newTrueAnswer"
         placeholder="Enter true answer"
-        value={localTrueAnswer}
+        value={newTrueAnswer}
+        name='newTrueAnswer'
       />
       <input
         maxLength={50}
         onChange={onChange}
         id="newFalseAnswer"
         placeholder="Enter false answer"
-        value={localFalseAnswer}
+        value={newFalseAnswer}
+        name='newFalseAnswer'
       />
       <button id="submitNewQuizBtn" disabled={isDisabled}>
         Submit new quiz
@@ -82,9 +88,8 @@ export function Form(props) {
 }
 
 const mapStateToProps = (state) => ({
-  newQuestion: state.form.newQuestion,
-  newTrueAnswer: state.form.newTrueAnswer,
-  newFalseAnswer: state.form.newFalseAnswer,
+ form: state.form
+
 });
 
 export default connect(mapStateToProps, actionCreators)(Form);

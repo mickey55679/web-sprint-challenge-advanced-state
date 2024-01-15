@@ -28,13 +28,12 @@ export const setQuiz = (quiz) => ({
   payload: quiz, 
  })
 
-export const inputChange = (id, value) => {
+export const inputChange = (formObj) => {
   // Store the data in local storage as well as sending it to Redux
-  localStorage.setItem(id, value);
-
+  // localStorage.setItem(id, value);
   return {
     type: INPUT_CHANGE,
-    payload: { id, value },
+    payload: formObj,
   };
 };
 
